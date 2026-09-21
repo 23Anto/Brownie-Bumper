@@ -7,22 +7,30 @@ public class OnBrownieClick : MonoBehaviour
     public TMP_Text Counter;
 
     // Click counter
-    private int clickCount = 0;
+    public int clickCount = 0;
 
     void Start()
     {
+        clickCount = PlayerPrefs.GetInt("CounterName", 0);
         UpdateUI();
     }
 
     public void OnButtonClick()
     {
-        clickCount++; 
+        clickCount++; // Updates the value of Counter
+
+        PlayerPrefs.SetInt("CounterName", clickCount); // Sets save value to amount of clicks
+        PlayerPrefs.Save();
+
         UpdateUI();   
     }
 
     void UpdateUI()
     {
-        Counter.text = clickCount.ToString();
+        if (Counter != null)
+        {
+            Counter.text = clickCount.ToString(); // Updates the UI through TMP_Text
+        }
     }
 
 }
