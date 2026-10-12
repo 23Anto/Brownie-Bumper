@@ -1,4 +1,13 @@
-using System.Collections;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Assembly_CSharp
+{
+    internal class SaveManager
+    {
+    }
+}using System.Collections;
 using UnityEngine;
 using TMPro;
 
@@ -8,6 +17,9 @@ public class SaveManager : MonoBehaviour
 
     [Header("Autosave Settings")]
     [SerializeField] private float saveIntervalSeconds = 20f;
+
+    [Header("UI Feedback (Optional)")]
+    public TMP_Text saveNotificationText;
 
     private void Awake()
     {
@@ -40,6 +52,19 @@ public class SaveManager : MonoBehaviour
     {
         PlayerPrefs.Save();
         Debug.Log($"[SaveManager] Autosaved state to disk at {System.DateTime.Now:T}");
+
+        if (saveNotificationText != null)
+        {
+            StartCoroutine(FlashIndicator());
+        }
+    }
+
+    private IEnumerator FlashIndicator()
+    {
+        saveNotificationText.gameObject.SetActive(true);
+        saveNotificationText.text = "Saved...";
+        yield return new WaitForSeconds(1.5f);
+        saveNotificationText.gameObject.SetActive(false);
     }
 
     private void OnApplicationQuit()
