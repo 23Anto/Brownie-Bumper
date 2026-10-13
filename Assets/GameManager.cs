@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public long TotalEarned { get; private set; } // Lifetime brownies, used for the leaderboard
     public event Action OnStateChanged; // UI subscribes instead of being called directly
 
-    float passiveTimer;
+    public double SmoothBrownies => Brownies + passiveCarry; // Includes the fraction in progress
 
     void Awake() { Instance = this; Load(); }
 
@@ -60,17 +60,19 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+    double passiveCarry; // Fractional brownies that haven't added up to a whole one yet
+
     void Update()
     {
-        // Passive income ticks once per second
-        passiveTimer += Time.deltaTime;
-        if (passiveTimer >= 1f)
+        // Earn a tiny slice each frame. Brownies is a whole number, so keep the remainder in the carry.
+        passiveCarry += PerSecond() * (double)Time.deltaTime;
+        long whole = (long)passiveCarry;
+        if (whole > 0)
         {
-            passiveTimer -= 1f;
-            long passive = PerSecond();
-            Brownies += passive;
-            TotalEarned += passive;
-            OnStateChanged?.Invoke();
+            passiveCarry -= whole;
+            Brownies += whole;
+            TotalEarned += whole;
+            OnStateChanged?.Invoke(); // Only refresh the UI when the total actually changed
         }
     }
 

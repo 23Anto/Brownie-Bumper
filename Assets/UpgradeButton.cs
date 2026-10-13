@@ -4,7 +4,7 @@ using TMPro;
 
 public class UpgradeButton : MonoBehaviour
 {
-    public int upgradeIndex;      // Which entry in GameManager.upgrades
+    public int upgradeIndex;     
     public TMP_Text label;
     public Button button;
 

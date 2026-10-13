@@ -14,8 +14,12 @@ public class LeaderboardUI : MonoBehaviour
 
     async System.Threading.Tasks.Task Refresh()
     {
-        boardText.text = "Loading...";
-        boardText.text = await LeaderboardManager.GetTopTen();
-        myRankText.text = await LeaderboardManager.GetMyRank();
+        if (boardText != null) boardText.text = "Loading...";
+        string board = await LeaderboardManager.GetTopTen();
+        string rank = await LeaderboardManager.GetMyRank();
+
+        // The scene may have changed while we were waiting on the network
+        if (boardText != null) boardText.text = board;
+        if (myRankText != null) myRankText.text = rank;
     }
 }
