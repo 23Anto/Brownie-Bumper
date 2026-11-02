@@ -132,6 +132,9 @@ public class GameManager : MonoBehaviour
     }
 
     double passiveCarry; // Fractional brownies that haven't added up to a whole one yet
+    [SerializeField] float autosaveSeconds = 20f;
+    float autosaveTimer;
+
 
     void Update()
     {
@@ -145,13 +148,22 @@ public class GameManager : MonoBehaviour
             TotalEarned += whole;
             OnStateChanged?.Invoke(); // Only refresh the UI when the total actually changed
         }
+
+        autosaveTimer += Time.unscaledDeltaTime;
+        
+        if (autosaveTimer >= autosaveSeconds)
+        {
+            autosaveTimer = 0f;
+            Save();
+        }
     }
+
 
     // --- Secure Saving: write values and an authentication tag ---
     void OnApplicationPause(bool paused) { if (paused) Save(); }
     void OnApplicationQuit() { Save(); }
 
-    void Save()
+    public void Save()
     {
         // 1. Convert data to strings
         string browniesStr = Brownies.ToString();
@@ -178,7 +190,11 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    void Load()
+    void OnDestroy()
+    {
+        if (Instance == this) Save();   // covers any scene change
+    }   
+    public void Load()
     {
         // 1. Gather all current values sitting in PlayerPrefs
         string browniesStr = PlayerPrefs.GetString("brownies", "0");
