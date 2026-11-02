@@ -147,28 +147,98 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // --- Saving: write on pause/quit instead of every click ---
+    // --- Secure Saving: write values and an authentication tag ---
     void OnApplicationPause(bool paused) { if (paused) Save(); }
     void OnApplicationQuit() { Save(); }
 
     void Save()
     {
-        PlayerPrefs.SetString("brownies", Brownies.ToString());
-        PlayerPrefs.SetString("totalEarned", TotalEarned.ToString());
+        // 1. Convert data to strings
+        string browniesStr = Brownies.ToString();
+        string totalEarnedStr = TotalEarned.ToString();
+
+        // 2. Build a combined payload of ALL critical progression data
+        // This ensures a cheater can't swap a high score from one value into another
+        System.Text.StringBuilder payloadBuilder = new System.Text.StringBuilder();
+        payloadBuilder.Append(browniesStr).Append("|").Append(totalEarnedStr);
+
         for (int i = 0; i < upgrades.Count; i++)
+        {
+            payloadBuilder.Append("|").Append(upgrades[i].level);
             PlayerPrefs.SetInt("upgrade_" + i, upgrades[i].level);
+        }
+
+        // 3. Generate a single cryptographic signature for this exact game state
+        string signature = SaveGuard.Sign(payloadBuilder.ToString());
+
+        // 4. Commit values and signature safely to PlayerPrefs
+        PlayerPrefs.SetString("brownies", browniesStr);
+        PlayerPrefs.SetString("totalEarned", totalEarnedStr);
+        PlayerPrefs.SetString("save_signature", signature); 
         PlayerPrefs.Save();
     }
 
     void Load()
     {
-        long.TryParse(PlayerPrefs.GetString("brownies", "0"), out long saved);
-        Brownies = saved;
+        // 1. Gather all current values sitting in PlayerPrefs
+        string browniesStr = PlayerPrefs.GetString("brownies", "0");
+        string totalEarnedStr = PlayerPrefs.GetString("totalEarned", "0");
+        string savedSignature = PlayerPrefs.GetString("save_signature", "");
 
-        long.TryParse(PlayerPrefs.GetString("totalEarned", "0"), out long savedTotal);
+        // If no signature exists yet, it's a completely brand new local save file
+        if (string.IsNullOrEmpty(savedSignature))
+        {
+            ResetToDefault();
+            return;
+        }
+
+        // 2. Reconstruct the payload EXACTLY how it was built during Save()
+        System.Text.StringBuilder payloadBuilder = new System.Text.StringBuilder();
+        payloadBuilder.Append(browniesStr).Append("|").Append(totalEarnedStr);
+
+        int[] cachedLevels = new int[upgrades.Count];
+        for (int i = 0; i < upgrades.Count; i++)
+        {
+            cachedLevels[i] = PlayerPrefs.GetInt("upgrade_" + i, 0);
+            payloadBuilder.Append("|").Append(cachedLevels[i]);
+        }
+
+        // 3. Calculate what the signature SHOULD be based on the local data
+        string computedSignature = SaveGuard.Sign(payloadBuilder.ToString());
+
+        // 4. Verify match. If they don't match, someone edited the text values!
+        if (savedSignature != computedSignature)
+        {
+            Debug.LogError("[SaveGuard] Integrity check failed! PlayerPrefs data has been illegally modified.");
+            HandleTamperedSave();
+            return;
+        }
+
+        // 5. If clean, parse strings back into active game variables safely
+        long.TryParse(browniesStr, out long savedBrownies);
+        Brownies = savedBrownies;
+
+        long.TryParse(totalEarnedStr, out long savedTotal);
         TotalEarned = savedTotal;
 
         for (int i = 0; i < upgrades.Count; i++)
-            upgrades[i].level = PlayerPrefs.GetInt("upgrade_" + i, 0);
+        {
+            upgrades[i].level = cachedLevels[i];
+        }
+    }
+
+    private void ResetToDefault()
+    {
+        Brownies = 0;
+        TotalEarned = 0;
+        for (int i = 0; i < upgrades.Count; i++) upgrades[i].level = 0;
+    }
+
+    private void HandleTamperedSave()
+    {
+        // Punish the edit (e.g., wipe their file completely, or lock their leaderboard access)
+        ResetToDefault();
+        Save(); // Overwrites the corrupted data with clean 0 values
+        Debug.LogWarning("[SaveGuard] Tampered data cleared. Progression reset to zero.");
     }
 }

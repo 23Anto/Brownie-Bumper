@@ -65,6 +65,7 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+Assets/Secret.json
 
 # =========================================================================
 # Crash reports
