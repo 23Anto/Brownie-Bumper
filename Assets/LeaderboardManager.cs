@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Services.Authentication;
 using Unity.Services.Leaderboards;
+using Unity.Services.Leaderboards.Exceptions;
 
 public static class LeaderboardManager
 {
@@ -9,8 +10,11 @@ public static class LeaderboardManager
 
     public static async Task SubmitScore(long score)
     {
-        if (!AuthHelper.IsSignedIn) return; // Skip if testing the Game scene directly
-        try { await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardId, score); }
+        try
+        {
+            await AuthHelper.EnsureSignedIn(); // Initializes services and signs in if needed
+            await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardId, score);
+        }
         catch (System.Exception e) { Debug.LogError("Submit failed: " + e.Message); }
     }
 
@@ -18,6 +22,7 @@ public static class LeaderboardManager
     {
         try
         {
+            await AuthHelper.EnsureSignedIn();
             var result = await LeaderboardsService.Instance.GetScoresAsync(LeaderboardId,
                 new GetScoresOptions { Offset = 0, Limit = 10 });
 
@@ -37,9 +42,17 @@ public static class LeaderboardManager
     {
         try
         {
+            await AuthHelper.EnsureSignedIn();
             var me = await LeaderboardsService.Instance.GetPlayerScoreAsync(LeaderboardId);
             return $"Your rank: {me.Rank + 1} ({me.Score})";
         }
-        catch { return "You haven't submitted a score yet."; } // Throws if the player has no entry
+        catch (LeaderboardsException e) when (e.Reason == LeaderboardsExceptionReason.EntryNotFound)
+        {
+            return "You haven't submitted a score yet."; // Genuine "no entry" case only
+        }
+        catch (System.Exception e)
+        {
+            return "Couldn't load your rank: " + e.Message; // Surfaces real problems
+        }
     }
 }
