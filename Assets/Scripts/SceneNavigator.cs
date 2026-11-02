@@ -3,10 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class SceneNavigator : MonoBehaviour
 {
+    bool loading;
+
     public async void OpenLeaderboard()
     {
-        await LeaderboardManager.SubmitScore(GameManager.Instance.TotalEarned);
-        SceneManager.LoadScene("Leaderboard"); 
+        if (loading) return;
+        loading = true;
+        try { await LeaderboardManager.SubmitScore(GameManager.Instance.TotalEarned); }
+        finally { SceneManager.LoadScene("Leaderboard"); }
     }
 
     public void LogOut()
