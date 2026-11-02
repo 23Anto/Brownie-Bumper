@@ -12,7 +12,6 @@ public class Upgrade
     public long perSecondBonus = 0;      // Passive brownies/sec, per level
     [HideInInspector] public int level;
 
-    // Cost scales exponentially so early upgrades feel cheap and late ones feel earned
     public long CurrentCost => (long)(baseCost * Mathf.Pow(costMultiplier, level));
 }
 
@@ -20,12 +19,20 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public List<Upgrade> upgrades = new List<Upgrade>(); // Configure in the Inspector
+    [Header("Game Data")]
+    public List<Upgrade> upgrades = new List<Upgrade>();
     public long Brownies { get; private set; }
-    public long TotalEarned { get; private set; } // Lifetime brownies, used for the leaderboard
-    public event Action OnStateChanged; // UI subscribes instead of being called directly
+    public long TotalEarned { get; private set; } // Lifetime brownies
+    public event Action OnStateChanged; 
 
-    public double SmoothBrownies => Brownies + passiveCarry; // Includes the fraction in progress
+    public double SmoothBrownies => Brownies + passiveCarry;
+
+    [Header("Anti-Cheat Settings")]
+    [SerializeField] private int maxClicksPerSecond = 15;            // Max speed allowed
+    [SerializeField] private float suspiciousVarianceThreshold = 0.002f; // Inhuman precision (2ms)
+    [SerializeField] private int samplesToTest = 10;                 // Clicks needed to run the check
+    
+    private Queue<float> clickTimestamps = new Queue<float>();
 
     void Awake() { Instance = this; Load(); }
 
@@ -45,10 +52,74 @@ public class GameManager : MonoBehaviour
 
     public void Click()
     {
+        float currentTime = Time.unscaledTime;
+        clickTimestamps.Enqueue(currentTime);
+
+        while (clickTimestamps.Count > samplesToTest)
+        {
+            clickTimestamps.Dequeue();
+        }
+
+        if (clickTimestamps.Count >= samplesToTest)
+        {
+            if (!IsClickLegitimate())
+            {
+                return;
+            }
+        }
+
         long gained = ClickPower();
         Brownies += gained;
         TotalEarned += gained;
         OnStateChanged?.Invoke();
+    }
+
+    private bool IsClickLegitimate()
+    {
+        float[] timestamps = clickTimestamps.ToArray();
+        float totalIntervals = 0f;
+        List<float> intervals = new List<float>();
+
+        // Maps out click intervals
+        for (int i = 1; i < timestamps.Length; i++)
+        {
+            float interval = timestamps[i] - timestamps[i - 1];
+            intervals.Add(interval);
+            totalIntervals += interval;
+        }
+
+        float averageInterval = totalIntervals / intervals.Count;
+        float currentCPS = 1f / averageInterval;
+
+        // Speed Limit
+        if (currentCPS > maxClicksPerSecond)
+        {
+            Debug.LogWarning($"[Anti-Cheat] Click blocked. CPS too high: {currentCPS:F1}");
+            return false;
+        }
+
+        // Punishes uniform clicks
+        float variance = 0f;
+        foreach (float interval in intervals)
+        {
+            variance += Mathf.Abs(interval - averageInterval);
+        }
+        variance /= intervals.Count;
+
+        if (variance < suspiciousVarianceThreshold)
+        {
+            Debug.LogError($"[Anti-Cheat] Auto-clicker detected! Inhuman click timing variance: {variance:F5}s");
+            PunishCheater();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void PunishCheater()
+    {
+
+        Debug.LogWarning("Cheater flagged! Taking actions...");
     }
 
     public bool TryBuy(Upgrade u)
