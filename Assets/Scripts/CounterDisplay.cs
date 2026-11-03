@@ -5,6 +5,7 @@ using TMPro;
 public class CounterDisplay : MonoBehaviour
 {
     public TMP_Text counterText;
+    public TMP_Text perSecondText;   // NEW: the text under the count
     public float smoothing = 12f; // Higher = snappier, lower = floatier
 
     double shown;
@@ -26,5 +27,9 @@ public class CounterDisplay : MonoBehaviour
         if (Math.Abs(target - shown) < 0.01) shown = target;
 
         counterText.text = ((long)shown).ToString("N0"); // N0 adds thousands separators
+
+        // NEW: show how many brownies are earned each second
+        if (perSecondText != null)
+            perSecondText.text = gm.PerSecond().ToString("N0") + " brownies per second";
     }
 }
