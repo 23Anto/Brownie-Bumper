@@ -1,0 +1,54 @@
+{
+  "referenceWidth": 1672,
+  "referenceHeight": 941,
+  "framesPerSecond": 12,
+  "loopSeconds": 12,
+  "steam": {
+    "name": "Steam",
+    "x": 636,
+    "y": 451,
+    "width": 104,
+    "height": 185
+  },
+  "marshmallows": [
+    {
+      "name": "MarshmallowLeft",
+      "x": 616,
+      "y": 632,
+      "width": 62,
+      "height": 54,
+      "amplitude": 5,
+      "period": 3,
+      "phase": 0
+    },
+    {
+      "name": "MarshmallowRight",
+      "x": 685,
+      "y": 651,
+      "width": 49,
+      "height": 39,
+      "amplitude": 4,
+      "period": 4,
+      "phase": 1.1
+    }
+  ],
+  "eyes": [
+    {
+      "name": "EyeLeft",
+      "x": 212,
+      "y": 650,
+      "width": 50,
+      "height": 50
+    },
+    {
+      "name": "EyeRight",
+      "x": 357,
+      "y": 660,
+      "width": 49,
+      "height": 51
+    }
+  ],
+  "rainCell": 4,
+  "rainCount": 58,
+  "seed": 84721
+}

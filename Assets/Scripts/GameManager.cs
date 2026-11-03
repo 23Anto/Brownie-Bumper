@@ -80,6 +80,13 @@ public class GameManager : MonoBehaviour
     void OnApplicationPause(bool paused) { if (paused) Save(); }
     void OnApplicationQuit() { Save(); }
 
+    void OnDestroy()
+    {
+        if (Instance != this) return;
+        Save();
+        Instance = null;
+    }
+
     void Save()
     {
         PlayerPrefs.SetString("brownies", Brownies.ToString());
