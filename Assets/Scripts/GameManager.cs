@@ -15,6 +15,8 @@ public class Upgrade
     public long CurrentCost => (long)(baseCost * Mathf.Pow(costMultiplier, level));
 }
 
+public enum BuffType { Production, Click }
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -40,7 +42,7 @@ public class GameManager : MonoBehaviour
     {
         long power = 1;
         foreach (var u in upgrades) power += u.clickBonus * u.level;
-        return power;
+        return (long)(power * ClickMultiplier);
     }
 
     public long PerSecond()
@@ -74,6 +76,29 @@ public class GameManager : MonoBehaviour
         OnStateChanged?.Invoke();
     }
 
+    // --- Golden brownie buffs (temporary, never saved) ---
+    float prodMult = 1f, clickMult = 1f;
+    float prodBuffEnd, clickBuffEnd; // Time.unscaledTime deadlines
+
+    public float ProductionMultiplier => Time.unscaledTime < prodBuffEnd ? prodMult : 1f;
+    public float ClickMultiplier      => Time.unscaledTime < clickBuffEnd ? clickMult : 1f;
+    public float ProductionBuffRemaining => Mathf.Max(0f, prodBuffEnd - Time.unscaledTime);
+    public float ClickBuffRemaining      => Mathf.Max(0f, clickBuffEnd - Time.unscaledTime);
+
+    public void GrantBrownies(long amount)
+    {
+        if (amount <= 0) return;
+        Brownies += amount;
+        TotalEarned += amount;
+        OnStateChanged?.Invoke();
+    }
+
+    public void ApplyBuff(BuffType type, float multiplier, float seconds)
+    {
+        float end = Time.unscaledTime + seconds;
+        if (type == BuffType.Production) { prodMult = multiplier; prodBuffEnd = end; }
+        else                             { clickMult = multiplier; clickBuffEnd = end; }
+    }
     private bool IsClickLegitimate()
     {
         float[] timestamps = clickTimestamps.ToArray();
@@ -135,11 +160,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] float autosaveSeconds = 20f;
     float autosaveTimer;
 
-
     void Update()
     {
         // Earn a tiny slice each frame. Brownies is a whole number, so keep the remainder in the carry.
-        passiveCarry += PerSecond() * (double)Time.deltaTime;
+        passiveCarry += PerSecond() * ProductionMultiplier * (double)Time.deltaTime;
+
         long whole = (long)passiveCarry;
         if (whole > 0)
         {
