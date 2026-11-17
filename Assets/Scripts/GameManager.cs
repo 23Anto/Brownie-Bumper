@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 [Serializable]
 public class Upgrade
 {
     public string name;
+    [TextArea(2, 4)] public string description;   // NEW: shown in the tooltip
     public long baseCost = 10;
-    public float costMultiplier = 1.15f; // Cost growth per level (common idle-game curve)
-    public long clickBonus = 0;          // Extra brownies per click, per level
-    public long perSecondBonus = 0;      // Passive brownies/sec, per level
+    public float costMultiplier = 1.15f;
+    public long clickBonus = 0;
+    public long perSecondBonus = 0;
     [HideInInspector] public int level;
+    [HideInInspector] public double produced;     // NEW: lifetime brownies from this upgrade
 
     public long CurrentCost => (long)(baseCost * Mathf.Pow(costMultiplier, level));
 }
@@ -74,6 +77,9 @@ public class GameManager : MonoBehaviour
         Brownies += gained;
         TotalEarned += gained;
         OnStateChanged?.Invoke();
+    
+        float cm = ClickMultiplier;
+        foreach (var u in upgrades) u.produced += u.clickBonus * u.level * cm;
     }
 
     // --- Golden brownie buffs (temporary, never saved) ---
@@ -165,6 +171,9 @@ public class GameManager : MonoBehaviour
         // Earn a tiny slice each frame. Brownies is a whole number, so keep the remainder in the carry.
         passiveCarry += PerSecond() * ProductionMultiplier * (double)Time.deltaTime;
 
+        float pm = ProductionMultiplier;
+        foreach (var u in upgrades) u.produced += u.perSecondBonus * u.level * pm * (double)Time.deltaTime;
+
         long whole = (long)passiveCarry;
         if (whole > 0)
         {
@@ -203,6 +212,7 @@ public class GameManager : MonoBehaviour
         {
             payloadBuilder.Append("|").Append(upgrades[i].level);
             PlayerPrefs.SetInt("upgrade_" + i, upgrades[i].level);
+            PlayerPrefs.SetString("produced_" + i, upgrades[i].produced.ToString("R", CultureInfo.InvariantCulture));
         }
 
         // 3. Generate a single cryptographic signature for this exact game state
@@ -266,13 +276,24 @@ public class GameManager : MonoBehaviour
         {
             upgrades[i].level = cachedLevels[i];
         }
+
+        for (int i = 0; i < upgrades.Count; i++)
+        {
+            double.TryParse(PlayerPrefs.GetString("produced_" + i, "0"),
+                NumberStyles.Float, CultureInfo.InvariantCulture, out double p);
+            upgrades[i].produced = p;
+        }
     }
 
     private void ResetToDefault()
     {
         Brownies = 0;
         TotalEarned = 0;
-        for (int i = 0; i < upgrades.Count; i++) upgrades[i].level = 0;
+        for (int i = 0; i < upgrades.Count; i++) 
+        {
+        upgrades[i].level = 0;
+        upgrades[i].produced = 0;
+        }
     }
 
     private void HandleTamperedSave()

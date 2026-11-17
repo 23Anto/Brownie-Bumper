@@ -15,7 +15,7 @@ public class BuffHUD : MonoBehaviour
         toastText.text = msg;
         toastText.gameObject.SetActive(true);
         toastUntil = Time.unscaledTime + 3f;
-    }
+    } 
 
     void Update()
     {
