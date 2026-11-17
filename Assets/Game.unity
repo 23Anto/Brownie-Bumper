@@ -815,7 +815,6 @@ GameObject:
   m_Component:
   - component: {fileID: 202657008}
   - component: {fileID: 202657011}
-  - component: {fileID: 202657010}
   - component: {fileID: 202657009}
   m_Layer: 5
   m_Name: MenuHub
@@ -842,7 +841,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 710.77576, y: 400}
+  m_AnchoredPosition: {x: 864.34375, y: 400}
   m_SizeDelta: {x: 1421.6, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &202657009
@@ -862,29 +861,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &202657010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202657007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
 --- !u!223 &202657011
 Canvas:
   m_ObjectHideFlags: 0
@@ -4047,7 +4023,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 248165889}
   m_HandleRect: {fileID: 248165888}
   m_Direction: 2
-  m_Value: 0.9999999
+  m_Value: 0.99999994
   m_Size: 0.4862109
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7319,12 +7295,12 @@ MonoBehaviour:
     perSecondBonus: 100
     level: 0
     produced: 0
-  - name: Whisk
+  - name: Butter
     description: 
-    baseCost: 10000
+    baseCost: 1000000
     costMultiplier: 1.67
     clickBonus: 50
-    perSecondBonus: 500
+    perSecondBonus: 5000
     level: 0
     produced: 0
   - name: Chocolate
@@ -7335,12 +7311,12 @@ MonoBehaviour:
     perSecondBonus: 1000
     level: 0
     produced: 0
-  - name: Butter
+  - name: Whisk
     description: 
-    baseCost: 1000000
+    baseCost: 10000
     costMultiplier: 1.67
     clickBonus: 50
-    perSecondBonus: 5000
+    perSecondBonus: 500
     level: 0
     produced: 0
   - name: Recipe
@@ -7500,7 +7476,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1685049993}
   - component: {fileID: 1685049996}
-  - component: {fileID: 1685049995}
   - component: {fileID: 1685049994}
   m_Layer: 5
   m_Name: UpgradeHub
@@ -7526,7 +7501,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 764.3095, y: 400}
+  m_AnchoredPosition: {x: 666.9676, y: 400}
   m_SizeDelta: {x: 1421.6, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1685049994
@@ -7546,29 +7521,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1685049995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1685049992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
 --- !u!223 &1685049996
 Canvas:
   m_ObjectHideFlags: 0
@@ -8398,7 +8350,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 764.3095, y: 400}
+  m_AnchoredPosition: {x: 677.41675, y: 400}
   m_SizeDelta: {x: 1421.6, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1903298797
@@ -8567,7 +8519,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 744.9445, y: 400}
+  m_AnchoredPosition: {x: 675.10034, y: 400}
   m_SizeDelta: {x: 1421.6, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1940165322
@@ -9082,9 +9034,9 @@ RectTransform:
   m_Children:
   - {fileID: 775598259}
   - {fileID: 1133660546}
-  - {fileID: 923779955}
-  - {fileID: 1369593386}
   - {fileID: 13817606}
+  - {fileID: 1369593386}
+  - {fileID: 923779955}
   - {fileID: 1940165323}
   - {fileID: 1892037579}
   - {fileID: 876221836}
