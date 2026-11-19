@@ -3,19 +3,57 @@ using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
+// Keep the signed-long save and leaderboard format without wrapping to negatives.
+internal static class BrownieMath
+{
+    internal static long Add(long left, long right) =>
+        left > long.MaxValue - right ? long.MaxValue : left + right;
+
+    internal static long Multiply(long value, int count)
+    {
+        if (value <= 0 || count <= 0) return 0;
+        return value > long.MaxValue / count ? long.MaxValue : value * count;
+    }
+
+    internal static long FromDouble(double value)
+    {
+        if (!(value > 0d)) return 0;
+        return value >= (double)long.MaxValue ? long.MaxValue : (long)value;
+    }
+}
+
 [Serializable]
 public class Upgrade
 {
     public string name;
     [TextArea(2, 4)] public string description;   // NEW: shown in the tooltip
     public long baseCost = 10;
-    public float costMultiplier = 1.15f;
+    public double costMultiplier = 1.15d;
     public long clickBonus = 0;
     public long perSecondBonus = 0;
     [HideInInspector] public int level;
     [HideInInspector] public double produced;     // NEW: lifetime brownies from this upgrade
 
-    public long CurrentCost => (long)(baseCost * Mathf.Pow(costMultiplier, level));
+    public long CurrentCost => TryGetCost(out long cost) ? cost : long.MaxValue;
+
+    public bool TryGetCost(out long cost)
+    {
+        cost = 0;
+        if (baseCost < 0 || level < 0 || level == int.MaxValue
+            || !(costMultiplier > 0d) || double.IsInfinity(costMultiplier))
+            return false;
+        if (level == 0 || costMultiplier == 1d || baseCost == 0)
+        {
+            cost = baseCost;
+            return true;
+        }
+
+        double price = baseCost * Math.Pow(costMultiplier, level);
+        if (!(price >= 0d)) return false;
+        // Round up the geometric price and keep it within the supported balance range.
+        cost = BrownieMath.FromDouble(Math.Ceiling(price));
+        return true;
+    }
 }
 
 public enum BuffType { Production, Click }
@@ -44,16 +82,21 @@ public class GameManager : MonoBehaviour
     public long ClickPower()
     {
         long power = 1;
-        foreach (var u in upgrades) power += u.clickBonus * u.level;
-        return (long)(power * ClickMultiplier);
+        foreach (var u in upgrades)
+            power = BrownieMath.Add(power, BrownieMath.Multiply(u.clickBonus, u.level));
+        float multiplier = ClickMultiplier;
+        return multiplier == 1f ? power : BrownieMath.FromDouble((double)power * multiplier);
     }
 
     public long PerSecond()
     {
         long total = 0;
-        foreach (var u in upgrades) total += u.perSecondBonus * u.level;
+        foreach (var u in upgrades)
+            total = BrownieMath.Add(total, BrownieMath.Multiply(u.perSecondBonus, u.level));
         return total;
     }
+
+    public double CurrentProductionRate => (double)PerSecond() * ProductionMultiplier;
 
     public void Click()
     {
@@ -73,13 +116,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        long gained = ClickPower();
-        Brownies += gained;
-        TotalEarned += gained;
-        OnStateChanged?.Invoke();
+        GrantBrownies(ClickPower());
     
         float cm = ClickMultiplier;
-        foreach (var u in upgrades) u.produced += u.clickBonus * u.level * cm;
+        foreach (var u in upgrades) u.produced += (double)u.clickBonus * u.level * cm;
     }
 
     // --- Golden brownie buffs (temporary, never saved) ---
@@ -94,8 +134,8 @@ public class GameManager : MonoBehaviour
     public void GrantBrownies(long amount)
     {
         if (amount <= 0) return;
-        Brownies += amount;
-        TotalEarned += amount;
+        Brownies = BrownieMath.Add(Brownies, amount);
+        TotalEarned = BrownieMath.Add(TotalEarned, amount);
         OnStateChanged?.Invoke();
     }
 
@@ -155,8 +195,8 @@ public class GameManager : MonoBehaviour
 
     public bool TryBuy(Upgrade u)
     {
-        if (Brownies < u.CurrentCost) return false;
-        Brownies -= u.CurrentCost;
+        if (u == null || !u.TryGetCost(out long cost) || Brownies < cost) return false;
+        Brownies -= cost;
         u.level++;
         OnStateChanged?.Invoke();
         return true;
@@ -169,18 +209,16 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Earn a tiny slice each frame. Brownies is a whole number, so keep the remainder in the carry.
-        passiveCarry += PerSecond() * ProductionMultiplier * (double)Time.deltaTime;
+        passiveCarry += CurrentProductionRate * Time.deltaTime;
 
         float pm = ProductionMultiplier;
-        foreach (var u in upgrades) u.produced += u.perSecondBonus * u.level * pm * (double)Time.deltaTime;
+        foreach (var u in upgrades) u.produced += (double)u.perSecondBonus * u.level * pm * Time.deltaTime;
 
-        long whole = (long)passiveCarry;
-        if (whole > 0)
+        double whole = Math.Floor(passiveCarry);
+        if (whole > 0d)
         {
-            passiveCarry -= whole;
-            Brownies += whole;
-            TotalEarned += whole;
-            OnStateChanged?.Invoke(); // Only refresh the UI when the total actually changed
+            passiveCarry = double.IsInfinity(whole) ? 0d : passiveCarry - whole;
+            GrantBrownies(BrownieMath.FromDouble(whole));
         }
 
         autosaveTimer += Time.unscaledDeltaTime;
@@ -267,14 +305,18 @@ public class GameManager : MonoBehaviour
 
         // 5. If clean, parse strings back into active game variables safely
         long.TryParse(browniesStr, out long savedBrownies);
-        Brownies = savedBrownies;
-
         long.TryParse(totalEarnedStr, out long savedTotal);
-        TotalEarned = savedTotal;
+        TotalEarned = savedTotal < 0 ? long.MaxValue : savedTotal;
+
+        // A legacy purchase could set the sign bit by subtracting a wrapped price.
+        // Keep the remaining balance, bounded by the verified lifetime earnings.
+        Brownies = savedBrownies < 0
+            ? Math.Min(savedBrownies - long.MinValue, TotalEarned)
+            : savedBrownies;
 
         for (int i = 0; i < upgrades.Count; i++)
         {
-            upgrades[i].level = cachedLevels[i];
+            upgrades[i].level = Math.Max(0, cachedLevels[i]);
         }
 
         for (int i = 0; i < upgrades.Count; i++)

@@ -5,13 +5,12 @@ using UnityEngine;
 public sealed class PersistentBGM : MonoBehaviour
 {
     private static PersistentBGM instance;
-
-    private const string VolumeKey = "settings_volume";
-    private const string MuteKey = "settings_mute";
+    private AudioSource music;
+    private float baseVolume;
 
     private void Awake()
     {
-        AudioSource music = GetComponent<AudioSource>();
+        music = GetComponent<AudioSource>();
         music.playOnAwake = false;
 
         if (instance != null && instance != this)
@@ -24,18 +23,23 @@ public sealed class PersistentBGM : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
+        baseVolume = music.volume;
         music.loop = true;
         music.spatialBlend = 0f;
         music.ignoreListenerVolume = false;
-
-        float savedVolume = Mathf.Clamp01(PlayerPrefs.GetFloat(VolumeKey, 1f));
-        bool muted = PlayerPrefs.GetInt(MuteKey, 0) == 1;
-        AudioListener.volume = muted ? 0f : savedVolume;
+        ApplyAudioSettings();
 
         if (music.clip != null && !music.isPlaying)
         {
             music.Play();
         }
+    }
+
+    public static void ApplyAudioSettings()
+    {
+        if (instance == null) return;
+        instance.music.volume = instance.baseVolume * GameAudioPrefs.BgmVolume;
+        instance.music.mute = GameAudioPrefs.BgmMuted;
     }
 
     private void OnDestroy()
@@ -46,4 +50,3 @@ public sealed class PersistentBGM : MonoBehaviour
         }
     }
 }
-

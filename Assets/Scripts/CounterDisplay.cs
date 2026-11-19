@@ -26,10 +26,9 @@ public class CounterDisplay : MonoBehaviour
         shown += (target - shown) * (1.0 - Math.Exp(-smoothing * Time.unscaledDeltaTime));
         if (Math.Abs(target - shown) < 0.01) shown = target;
 
-        counterText.text = ((long)shown).ToString("N0"); // N0 adds thousands separators
+        counterText.text = SaveManager.FormatNumber(Math.Max(0d, shown));
 
-        // NEW: show how many brownies are earned each second
         if (perSecondText != null)
-            perSecondText.text = gm.PerSecond().ToString("N0") + " brownies per second";
+            perSecondText.text = SaveManager.FormatNumber(gm.CurrentProductionRate) + " brownies/sec";
     }
 }

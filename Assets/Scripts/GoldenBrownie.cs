@@ -65,11 +65,11 @@ public class GoldenBrownie : MonoBehaviour
         if (roll < luckyWeight)
         {
             // Capped by both your bank and your production so it scales with progress
-            long fromBank = (long)(gm.Brownies * luckyBankPercent);
-            long fromProd = (long)(gm.PerSecond() * luckyMaxSecondsOfProduction);
-            long bonus = Math.Min(fromBank, fromProd) + 13;
+            long fromBank = BrownieMath.FromDouble((double)gm.Brownies * luckyBankPercent);
+            long fromProd = BrownieMath.FromDouble((double)gm.PerSecond() * luckyMaxSecondsOfProduction);
+            long bonus = BrownieMath.Add(Math.Min(fromBank, fromProd), 13);
             gm.GrantBrownies(bonus);
-            msg = $"Lucky! +{bonus:N0} brownies";
+            msg = $"Lucky! +{SaveManager.FormatNumber(bonus)} brownies";
         }
         else if (roll < luckyWeight + frenzyWeight)
         {

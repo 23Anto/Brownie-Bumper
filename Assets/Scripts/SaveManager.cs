@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Globalization;
+using System.Collections;
 using UnityEngine;
 using TMPro;
 
@@ -55,12 +57,34 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    static readonly string[] NumberSuffixes = { "", "K", "M", "B", "T", "Q" };
+
     public static string FormatNumber(double value)
     {
-        if (value >= 1e12) return (value / 1e12).ToString("F2") + "T";
-        if (value >= 1e9) return (value / 1e9).ToString("F2") + "B";
-        if (value >= 1e6) return (value / 1e6).ToString("F2") + "M";
-        if (value >= 1e3) return (value / 1e3).ToString("F2") + "K";
-        return value.ToString("N0");
+        if (double.IsNaN(value)) return "0";
+        if (double.IsInfinity(value)) value = value < 0d ? long.MinValue : long.MaxValue;
+
+        double amount = Math.Abs(value);
+        if (amount < 1d) return "0";
+        string sign = value < 0d ? "-" : "";
+        if (amount < 1000d)
+            return sign + Math.Floor(amount).ToString("0", CultureInfo.InvariantCulture);
+
+        int unit = 0;
+        while (amount >= 1000d && unit < NumberSuffixes.Length - 1)
+        {
+            amount /= 1000d;
+            unit++;
+        }
+        if (amount >= 1000000d)
+            return sign + amount.ToString("0.##e+0", CultureInfo.InvariantCulture) + NumberSuffixes[unit];
+
+        amount = Math.Round(amount, 2, MidpointRounding.AwayFromZero);
+        if (amount >= 1000d && unit < NumberSuffixes.Length - 1)
+        {
+            amount /= 1000d;
+            unit++;
+        }
+        return sign + amount.ToString("#,0.##", CultureInfo.InvariantCulture) + NumberSuffixes[unit];
     }
 }

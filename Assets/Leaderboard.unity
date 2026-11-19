@@ -679,6 +679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1109151437}
   - component: {fileID: 1109151438}
+  - component: {fileID: 9210000000}
   m_Layer: 0
   m_Name: LeaderboardUI
   m_TagString: Untagged
@@ -873,6 +874,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 9210000000}
+        m_TargetAssemblyTypeName: MenuSfx, Assembly-CSharp
+        m_MethodName: PlayButtonPop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1109151438}
         m_TargetAssemblyTypeName: LeaderboardUI, Assembly-CSharp
         m_MethodName: OnBackClicked
@@ -1006,6 +1019,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 9210000000}
+        m_TargetAssemblyTypeName: MenuSfx, Assembly-CSharp
+        m_MethodName: PlayButtonPop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1109151438}
         m_TargetAssemblyTypeName: LeaderboardUI, Assembly-CSharp
         m_MethodName: OnRefreshClicked
@@ -1272,6 +1297,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859174207}
   m_CullTransparentMesh: 1
+--- !u!114 &9210000000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109151436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0772729dfdd25efcb31316ccc468500b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuSfx
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

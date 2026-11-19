@@ -3,33 +3,88 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    [SerializeField] GameObject SettingsPanel;
-    [SerializeField] Slider VolumeSlider;
-    [SerializeField] Toggle MuteToggle;
+    [SerializeField] private GameObject SettingsPanel;
+    [SerializeField] private Slider VolumeSlider;
+    [SerializeField] private Toggle MuteToggle;
+    [SerializeField] private Slider SfxVolumeSlider;
+    [SerializeField] private Toggle SfxMuteToggle;
 
-    const string VolKey = "settings_volume", MuteKey = "settings_mute";
+    private bool settingsChanged;
 
-    // Apply saved audio settings on launch, whichever scene loads first
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    static void ApplyOnLaunch() =>
-        AudioListener.volume = PlayerPrefs.GetInt(MuteKey, 0) == 1 ? 0f : PlayerPrefs.GetFloat(VolKey, 1f);
-
-    void Start()
+    private void Start()
     {
-        VolumeSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat(VolKey, 1f));
-        MuteToggle.SetIsOnWithoutNotify(PlayerPrefs.GetInt(MuteKey, 0) == 1);
-        VolumeSlider.onValueChanged.AddListener(_ => Apply());
-        MuteToggle.onValueChanged.AddListener(_ => Apply());
+        ReadSettings();
+        VolumeSlider.onValueChanged.AddListener(_ => ApplyBgm());
+        MuteToggle.onValueChanged.AddListener(_ => ApplyBgm());
+        if (SfxVolumeSlider != null && SfxMuteToggle != null)
+        {
+            SfxVolumeSlider.onValueChanged.AddListener(_ => ApplySfx());
+            SfxMuteToggle.onValueChanged.AddListener(_ => ApplySfx());
+        }
+
         SettingsPanel.SetActive(false);
     }
 
-    void Apply()
+    private void ReadSettings()
     {
-        PlayerPrefs.SetFloat(VolKey, VolumeSlider.value);
-        PlayerPrefs.SetInt(MuteKey, MuteToggle.isOn ? 1 : 0);
-        AudioListener.volume = MuteToggle.isOn ? 0f : VolumeSlider.value;
+        VolumeSlider.SetValueWithoutNotify(GameAudioPrefs.BgmVolume);
+        MuteToggle.SetIsOnWithoutNotify(GameAudioPrefs.BgmMuted);
+        if (SfxVolumeSlider != null && SfxMuteToggle != null)
+        {
+            SfxVolumeSlider.SetValueWithoutNotify(GameAudioPrefs.SfxVolume);
+            SfxMuteToggle.SetIsOnWithoutNotify(GameAudioPrefs.SfxMuted);
+        }
     }
 
-    public void Open()  => SettingsPanel.SetActive(true);   // hook SettingsButton here
-    public void Close() => SettingsPanel.SetActive(false);  // hook Close button here
+    private void ApplyBgm()
+    {
+        PlayerPrefs.SetFloat(GameAudioPrefs.BgmVolumeKey, VolumeSlider.value);
+        PlayerPrefs.SetInt(GameAudioPrefs.BgmMuteKey, MuteToggle.isOn ? 1 : 0);
+        PersistentBGM.ApplyAudioSettings();
+        settingsChanged = true;
+    }
+
+    private void ApplySfx()
+    {
+        PlayerPrefs.SetFloat(GameAudioPrefs.SfxVolumeKey, SfxVolumeSlider.value);
+        PlayerPrefs.SetInt(GameAudioPrefs.SfxMuteKey, SfxMuteToggle.isOn ? 1 : 0);
+        MenuSfx.ApplyAudioSettings();
+        settingsChanged = true;
+    }
+
+    public void Open()
+    {
+        ReadSettings();
+        SettingsPanel.SetActive(true);
+    }
+
+    public void Close()
+    {
+        SettingsPanel.SetActive(false);
+        SaveSettings();
+    }
+
+    private void OnDestroy() => SaveSettings();
+
+    private void SaveSettings()
+    {
+        if (!settingsChanged) return;
+        PlayerPrefs.Save();
+        settingsChanged = false;
+    }
+}
+
+internal static class GameAudioPrefs
+{
+    // The original audio preferences now apply to background music.
+    internal const string BgmVolumeKey = "settings_volume";
+    internal const string BgmMuteKey = "settings_mute";
+    internal const string SfxVolumeKey = "settings_sfx_volume";
+    internal const string SfxMuteKey = "settings_sfx_mute";
+    internal const float DefaultSfxVolume = 0.22f;
+
+    internal static float BgmVolume => Mathf.Clamp01(PlayerPrefs.GetFloat(BgmVolumeKey, 1f));
+    internal static bool BgmMuted => PlayerPrefs.GetInt(BgmMuteKey, 0) == 1;
+    internal static float SfxVolume => Mathf.Clamp01(PlayerPrefs.GetFloat(SfxVolumeKey, DefaultSfxVolume));
+    internal static bool SfxMuted => PlayerPrefs.GetInt(SfxMuteKey, 0) == 1;
 }
