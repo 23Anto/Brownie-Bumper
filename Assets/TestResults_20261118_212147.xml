@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="35" result="Failed(Child)" total="35" passed="33" failed="2" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-19 03:21:23Z" end-time="2026-11-19 03:21:25Z" duration="1.6795766">
+  <test-suite type="TestSuite" id="1056" name="Brownie Bumper" fullname="Brownie Bumper" runstate="Runnable" testcasecount="35" result="Failed" site="Child" start-time="2026-11-19 03:21:23Z" end-time="2026-11-19 03:21:25Z" duration="1.679577" total="35" passed="33" failed="2" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1098" name="BrownieBumper.Tests.PlayMode.dll" fullname="C:/Users/anton/Brownie Bumper/Library/ScriptAssemblies/BrownieBumper.Tests.PlayMode.dll" runstate="Runnable" testcasecount="35" result="Failed" site="Child" start-time="2026-11-19 03:21:23Z" end-time="2026-11-19 03:21:25Z" duration="1.664745" total="35" passed="33" failed="2" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="18880" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestFixture" id="1070" name="AntiCheatTests" fullname="AntiCheatTests" classname="AntiCheatTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-19 03:21:23Z" end-time="2026-11-19 03:21:23Z" duration="0.119251" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1074" name="BlockedClicks_DoNotRaiseTheLeaderboardScoreOrUpgradeStats" fullname="AntiCheatTests.BlockedClicks_DoNotRaiseTheLeaderboardScoreOrUpgradeStats" methodname="BlockedClicks_DoNotRaiseTheLeaderboardScoreOrUpgradeStats" classname="AntiCheatTests" runstate="Runnable" seed="1714325645" result="Passed" start-time="2026-11-19 03:21:23Z" end-time="2026-11-19 03:21:23Z" duration="0.058802" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+]]></output>
+        </test-case>
+        <test-case id="1072" name="ClickingFasterThanTheLimit_IsBlockedOnceTheCheckStarts" fullname="AntiCheatTests.ClickingFasterThanTheLimit_IsBlockedOnceTheCheckStarts" methodname="ClickingFasterThanTheLimit_IsBlockedOnceTheCheckStarts" classname="AntiCheatTests" runstate="Runnable" seed="1445319194" result="Passed" start-time="2026-11-19 03:21:23Z" end-time="2026-11-19 03:21:23Z" duration="0.013638" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+[Anti-Cheat] Click blocked. CPS too high: 100.0
+]]></output>
+        </test-case>
+        <test-case id="1071" name="HumanLikeClicking_IsFullyAccepted" fullname="AntiCheatTests.HumanLikeClicking_IsFullyAccepted" methodname="HumanLikeClicking_IsFullyAccepted" classname="AntiCheatTests" runstate="Runnable" seed="344142464" result="Passed" start-time="2026-11-19 03:21:23Z" end-time="2026-11-19 03:21:23Z" duration="0.004396" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1073" name="PerfectlyRegularClicking_AtLegalSpeed_IsFlaggedAsAutoclicker" fullname="AntiCheatTests.PerfectlyRegularClicking_AtLegalSpeed_IsFlaggedAsAutoclicker" methodname="PerfectlyRegularClicking_AtLegalSpeed_IsFlaggedAsAutoclicker" classname="AntiCheatTests" runstate="Runnable" seed="471149062" result="Passed" start-time="2026-11-19 03:21:23Z" end-time="2026-11-19 03:21:23Z" duration="0.007082" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[[Anti-Cheat] Auto-clicker detected! Inhuman click timing variance: 0.00000s
+Cheater flagged! Taking actions...
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1075" name="BuffTests" fullname="BuffTests" classname="BuffTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-19 03:21:23Z" end-time="2026-11-19 03:21:24Z" duration="0.042262" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1080" name="ApplyingTheSameBuffAgain_ReplacesItInsteadOfStacking" fullname="BuffTests.ApplyingTheSameBuffAgain_ReplacesItInsteadOfStacking" methodname="ApplyingTheSameBuffAgain_ReplacesItInsteadOfStacking" classname="BuffTests" runstate="Runnable" seed="950150386" result="Passed" start-time="2026-11-19 03:21:23Z" end-time="2026-11-19 03:21:23Z" duration="0.006624" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1077" name="BuffRemaining_CountsDownAndNeverGoesNegative" fullname="BuffTests.BuffRemaining_CountsDownAndNeverGoesNegative" methodname="BuffRemaining_CountsDownAndNeverGoesNegative" classname="BuffTests" runstate="Runnable" seed="2062184304" result="Passed" start-time="2026-11-19 03:21:23Z" end-time="2026-11-19 03:21:24Z" duration="0.004159" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1079" name="Buffs_AreIndependent_AndDoNotChangeTheBasePerSecondRate" fullname="BuffTests.Buffs_AreIndependent_AndDoNotChangeTheBasePerSecondRate" methodname="Buffs_AreIndependent_AndDoNotChangeTheBasePerSecondRate" classname="BuffTests" runstate="Runnable" seed="1855121105" result="Passed" start-time="2026-11-19 03:21:24Z" end-time="2026-11-19 03:21:24Z" duration="0.004837" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1078" name="ClickBuff_MultipliesClickPower_AndEndsWhenItExpires" fullname="BuffTests.ClickBuff_MultipliesClickPower_AndEndsWhenItExpires" methodname="ClickBuff_MultipliesClickPower_AndEndsWhenItExpires" classname="BuffTests" runstate="Runnable" seed="2117299828" result="Passed" start-time="2026-11-19 03:21:24Z" end-time="2026-11-19 03:21:24Z" duration="0.004123" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1076" name="ProductionBuff_AppliesThenExpires" fullname="BuffTests.ProductionBuff_AppliesThenExpires" methodname="ProductionBuff_AppliesThenExpires" classname="BuffTests" runstate="Runnable" seed="712844158" result="Passed" start-time="2026-11-19 03:21:24Z" end-time="2026-11-19 03:21:24Z" duration="0.004142" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1057" name="EconomyTests" fullname="EconomyTests" classname="EconomyTests" runstate="Runnable" testcasecount="12" result="Failed" site="Child" start-time="2026-11-19 03:21:24Z" end-time="2026-11-19 03:21:25Z" duration="1.322235" total="12" passed="10" failed="2" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-case id="1062" name="Click_AddsClickPowerToBothBrowniesAndTotalEarned" fullname="EconomyTests.Click_AddsClickPowerToBothBrowniesAndTotalEarned" methodname="Click_AddsClickPowerToBothBrowniesAndTotalEarned" classname="EconomyTests" runstate="Runnable" seed="1575206822" result="Passed" start-time="2026-11-19 03:21:24Z" end-time="2026-11-19 03:21:24Z" duration="0.004448" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1060" name="ClickPower_AddsClickBonusTimesLevelForEveryUpgrade" fullname="EconomyTests.ClickPower_AddsClickBonusTimesLevelForEveryUpgrade" methodname="ClickPower_AddsClickBonusTimesLevelForEveryUpgrade" classname="EconomyTests" runstate="Runnable" seed="474013521" result="Passed" start-time="2026-11-19 03:21:24Z" end-time="2026-11-19 03:21:24Z" duration="0.004053" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1059" name="ClickPower_WithNoUpgrades_IsOne" fullname="EconomyTests.ClickPower_WithNoUpgrades_IsOne" methodname="ClickPower_WithNoUpgrades_IsOne" classname="EconomyTests" runstate="Runnable" seed="2050577216" result="Passed" start-time="2026-11-19 03:21:24Z" end-time="2026-11-19 03:21:24Z" duration="0.004053" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1067" name="GrantBrownies_IgnoresZeroAndNegativeAmounts" fullname="EconomyTests.GrantBrownies_IgnoresZeroAndNegativeAmounts" methodname="GrantBrownies_IgnoresZeroAndNegativeAmounts" classname="EconomyTests" runstate="Runnable" seed="879783926" result="Passed" start-time="2026-11-19 03:21:24Z" end-time="2026-11-19 03:21:24Z" duration="0.004095" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1058" name="NewGame_StartsAtZero" fullname="EconomyTests.NewGame_StartsAtZero" methodname="NewGame_StartsAtZero" classname="EconomyTests" runstate="Runnable" seed="872093610" result="Passed" start-time="2026-11-19 03:21:24Z" end-time="2026-11-19 03:21:24Z" duration="0.003947" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1068" name="OnStateChanged_FiresOnClickGrantAndPurchase" fullname="EconomyTests.OnStateChanged_FiresOnClickGrantAndPurchase" methodname="OnStateChanged_FiresOnClickGrantAndPurchase" classname="EconomyTests" runstate="Runnable" seed="1586097631" result="Passed" start-time="2026-11-19 03:21:24Z" end-time="2026-11-19 03:21:24Z" duration="0.004708" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1069" name="PassiveIncome_AccruesOverTime" fullname="EconomyTests.PassiveIncome_AccruesOverTime" methodname="PassiveIncome_AccruesOverTime" classname="EconomyTests" runstate="Runnable" seed="1462022574" result="Passed" start-time="2026-11-19 03:21:24Z" end-time="2026-11-19 03:21:25Z" duration="1.241686" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1061" name="PerSecond_SumsPassiveBonusTimesLevel" fullname="EconomyTests.PerSecond_SumsPassiveBonusTimesLevel" methodname="PerSecond_SumsPassiveBonusTimesLevel" classname="EconomyTests" runstate="Runnable" seed="1519076669" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.004272" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1066" name="TryBuy_MakesTheNextLevelMoreExpensive" fullname="EconomyTests.TryBuy_MakesTheNextLevelMoreExpensive" methodname="TryBuy_MakesTheNextLevelMoreExpensive" classname="EconomyTests" runstate="Runnable" seed="1475107108" result="Failed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.013373" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[  Expected: 11
+  But was:  12
+]]></message>
+            <stack-trace><![CDATA[at EconomyTests.TryBuy_MakesTheNextLevelMoreExpensive () [0x00042] in C:\Users\anton\Brownie Bumper\Assets\Tests\PlayMode\GameManagerTests.cs:97
+]]></stack-trace>
+          </failure>
+        </test-case>
+        <test-case id="1064" name="TryBuy_WhenAffordable_SpendsBrowniesAndLevelsUp_ButKeepsLifetimeTotal" fullname="EconomyTests.TryBuy_WhenAffordable_SpendsBrowniesAndLevelsUp_ButKeepsLifetimeTotal" methodname="TryBuy_WhenAffordable_SpendsBrowniesAndLevelsUp_ButKeepsLifetimeTotal" classname="EconomyTests" runstate="Runnable" seed="1532980910" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.004633" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1065" name="TryBuy_WhenTooPoor_ChangesNothing" fullname="EconomyTests.TryBuy_WhenTooPoor_ChangesNothing" methodname="TryBuy_WhenTooPoor_ChangesNothing" classname="EconomyTests" runstate="Runnable" seed="1623303438" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.004945" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1063" name="UpgradeCost_GrowsExponentiallyWithLevel" fullname="EconomyTests.UpgradeCost_GrowsExponentiallyWithLevel" methodname="UpgradeCost_GrowsExponentiallyWithLevel" classname="EconomyTests" runstate="Runnable" seed="1512153447" result="Failed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.004202" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[  Expected: 13
+  But was:  14
+]]></message>
+            <stack-trace><![CDATA[at EconomyTests.UpgradeCost_GrowsExponentiallyWithLevel () [0x0003c] in C:\Users\anton\Brownie Bumper\Assets\Tests\PlayMode\GameManagerTests.cs:60
+]]></stack-trace>
+          </failure>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1094" name="SaveGuardTests" fullname="SaveGuardTests" classname="SaveGuardTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.020434" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1096" name="Sign_ChangesWhenAnyPartOfThePayloadChanges" fullname="SaveGuardTests.Sign_ChangesWhenAnyPartOfThePayloadChanges" methodname="Sign_ChangesWhenAnyPartOfThePayloadChanges" classname="SaveGuardTests" runstate="Runnable" seed="1453179944" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.003021" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1095" name="Sign_IsDeterministic" fullname="SaveGuardTests.Sign_IsDeterministic" methodname="Sign_IsDeterministic" classname="SaveGuardTests" runstate="Runnable" seed="439856809" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.000291" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1097" name="Sign_ReturnsABase64Sha256Tag" fullname="SaveGuardTests.Sign_ReturnsABase64Sha256Tag" methodname="Sign_ReturnsABase64Sha256Tag" classname="SaveGuardTests" runstate="Runnable" seed="1022164145" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.000267" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1081" name="SaveProtectionTests" fullname="SaveProtectionTests" classname="SaveProtectionTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.150214" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1093" name="ActiveBuffs_AreNotSaved" fullname="SaveProtectionTests.ActiveBuffs_AreNotSaved" methodname="ActiveBuffs_AreNotSaved" classname="SaveProtectionTests" runstate="Runnable" seed="1949950216" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.006952" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1092" name="AddingAnUpgrade_InvalidatesExistingSaves" fullname="SaveProtectionTests.AddingAnUpgrade_InvalidatesExistingSaves" methodname="AddingAnUpgrade_InvalidatesExistingSaves" classname="SaveProtectionTests" runstate="Runnable" seed="2091916140" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.007682" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[[SaveGuard] Integrity check failed! PlayerPrefs data has been illegally modified.
+[SaveGuard] Tampered data cleared. Progression reset to zero.
+]]></output>
+        </test-case>
+        <test-case id="1090" name="AfterATamperReset_TheCleanSaveLoadsWithoutFurtherErrors" fullname="SaveProtectionTests.AfterATamperReset_TheCleanSaveLoadsWithoutFurtherErrors" methodname="AfterATamperReset_TheCleanSaveLoadsWithoutFurtherErrors" classname="SaveProtectionTests" runstate="Runnable" seed="407964395" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.007005" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[[SaveGuard] Integrity check failed! PlayerPrefs data has been illegally modified.
+[SaveGuard] Tampered data cleared. Progression reset to zero.
+]]></output>
+        </test-case>
+        <test-suite type="ParameterizedMethod" id="1088" name="EditedSaveString_IsDetected_AndProgressIsReset" fullname="SaveProtectionTests.EditedSaveString_IsDetected_AndProgressIsReset" classname="SaveProtectionTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.084532" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1085" name="EditedSaveString_IsDetected_AndProgressIsReset(&quot;brownies&quot;,&quot;999999999&quot;)" fullname="SaveProtectionTests.EditedSaveString_IsDetected_AndProgressIsReset(&quot;brownies&quot;,&quot;999999999&quot;)" methodname="EditedSaveString_IsDetected_AndProgressIsReset" classname="SaveProtectionTests" runstate="Runnable" seed="181429265" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.008859" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+            <output><![CDATA[[SaveGuard] Integrity check failed! PlayerPrefs data has been illegally modified.
+[SaveGuard] Tampered data cleared. Progression reset to zero.
+]]></output>
+          </test-case>
+          <test-case id="1086" name="EditedSaveString_IsDetected_AndProgressIsReset(&quot;totalEarned&quot;,&quot;999999999999&quot;)" fullname="SaveProtectionTests.EditedSaveString_IsDetected_AndProgressIsReset(&quot;totalEarned&quot;,&quot;999999999999&quot;)" methodname="EditedSaveString_IsDetected_AndProgressIsReset" classname="SaveProtectionTests" runstate="Runnable" seed="1278345344" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.052139" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+            <output><![CDATA[[SaveGuard] Integrity check failed! PlayerPrefs data has been illegally modified.
+[SaveGuard] Tampered data cleared. Progression reset to zero.
+]]></output>
+          </test-case>
+          <test-case id="1087" name="EditedSaveString_IsDetected_AndProgressIsReset(&quot;save_signature&quot;,&quot;not-a-real-signature&quot;)" fullname="SaveProtectionTests.EditedSaveString_IsDetected_AndProgressIsReset(&quot;save_signature&quot;,&quot;not-a-real-signature&quot;)" methodname="EditedSaveString_IsDetected_AndProgressIsReset" classname="SaveProtectionTests" runstate="Runnable" seed="667063588" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.006706" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+            <output><![CDATA[[SaveGuard] Integrity check failed! PlayerPrefs data has been illegally modified.
+[SaveGuard] Tampered data cleared. Progression reset to zero.
+]]></output>
+          </test-case>
+        </test-suite>
+        <test-case id="1089" name="EditedUpgradeLevel_IsDetected_AndProgressIsReset" fullname="SaveProtectionTests.EditedUpgradeLevel_IsDetected_AndProgressIsReset" methodname="EditedUpgradeLevel_IsDetected_AndProgressIsReset" classname="SaveProtectionTests" runstate="Runnable" seed="1843098416" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.007400" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[[SaveGuard] Integrity check failed! PlayerPrefs data has been illegally modified.
+[SaveGuard] Tampered data cleared. Progression reset to zero.
+]]></output>
+        </test-case>
+        <test-case id="1083" name="LeavingTheScene_SavesProgress" fullname="SaveProtectionTests.LeavingTheScene_SavesProgress" methodname="LeavingTheScene_SavesProgress" classname="SaveProtectionTests" runstate="Runnable" seed="1565837440" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.004451" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1091" name="MissingSignature_IsTreatedAsANewGame_NotAsTampering" fullname="SaveProtectionTests.MissingSignature_IsTreatedAsANewGame_NotAsTampering" methodname="MissingSignature_IsTreatedAsANewGame_NotAsTampering" classname="SaveProtectionTests" runstate="Runnable" seed="379736223" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.004623" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1084" name="ProducedStat_IsSavedAndRestored" fullname="SaveProtectionTests.ProducedStat_IsSavedAndRestored" methodname="ProducedStat_IsSavedAndRestored" classname="SaveProtectionTests" runstate="Runnable" seed="1127760252" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.005099" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1082" name="SaveThenLoad_RestoresBrowniesTotalAndUpgradeLevels" fullname="SaveProtectionTests.SaveThenLoad_RestoresBrowniesTotalAndUpgradeLevels" methodname="SaveThenLoad_RestoresBrowniesTotalAndUpgradeLevels" classname="SaveProtectionTests" runstate="Runnable" seed="1200019951" result="Passed" start-time="2026-11-19 03:21:25Z" end-time="2026-11-19 03:21:25Z" duration="0.004984" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Saving results to: C:/Users/anton/AppData/LocalLow/DefaultCompany/Brownie Bumper\TestResults.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -4,18 +4,18 @@ using System.Globalization;
 using UnityEngine;
 
 // Keep the signed-long save and leaderboard format without wrapping to negatives.
-internal static class BrownieMath
+public static class BrownieMath
 {
-    internal static long Add(long left, long right) =>
+    public static long Add(long left, long right) =>
         left > long.MaxValue - right ? long.MaxValue : left + right;
 
-    internal static long Multiply(long value, int count)
+    public static long Multiply(long value, int count)
     {
         if (value <= 0 || count <= 0) return 0;
         return value > long.MaxValue / count ? long.MaxValue : value * count;
     }
 
-    internal static long FromDouble(double value)
+    public static long FromDouble(double value)
     {
         if (!(value > 0d)) return 0;
         return value >= (double)long.MaxValue ? long.MaxValue : (long)value;
@@ -70,6 +70,8 @@ public class GameManager : MonoBehaviour
 
     public double SmoothBrownies => Brownies + passiveCarry;
 
+    public Func<float> Clock = () => Time.unscaledTime;
+
     [Header("Anti-Cheat Settings")]
     [SerializeField] private int maxClicksPerSecond = 15;            // Max speed allowed
     [SerializeField] private float suspiciousVarianceThreshold = 0.002f; // Inhuman precision (2ms)
@@ -100,7 +102,7 @@ public class GameManager : MonoBehaviour
 
     public void Click()
     {
-        float currentTime = Time.unscaledTime;
+        float currentTime = Clock();
         clickTimestamps.Enqueue(currentTime);
 
         while (clickTimestamps.Count > samplesToTest)
@@ -124,12 +126,12 @@ public class GameManager : MonoBehaviour
 
     // --- Golden brownie buffs (temporary, never saved) ---
     float prodMult = 1f, clickMult = 1f;
-    float prodBuffEnd, clickBuffEnd; // Time.unscaledTime deadlines
+    float prodBuffEnd, clickBuffEnd; // Clock() deadlines
 
-    public float ProductionMultiplier => Time.unscaledTime < prodBuffEnd ? prodMult : 1f;
-    public float ClickMultiplier      => Time.unscaledTime < clickBuffEnd ? clickMult : 1f;
-    public float ProductionBuffRemaining => Mathf.Max(0f, prodBuffEnd - Time.unscaledTime);
-    public float ClickBuffRemaining      => Mathf.Max(0f, clickBuffEnd - Time.unscaledTime);
+    public float ProductionMultiplier => Clock() < prodBuffEnd ? prodMult : 1f;
+    public float ClickMultiplier      => Clock() < clickBuffEnd ? clickMult : 1f;
+    public float ProductionBuffRemaining => Mathf.Max(0f, prodBuffEnd - Clock());
+    public float ClickBuffRemaining      => Mathf.Max(0f, clickBuffEnd - Clock());
 
     public void GrantBrownies(long amount)
     {
@@ -141,7 +143,7 @@ public class GameManager : MonoBehaviour
 
     public void ApplyBuff(BuffType type, float multiplier, float seconds)
     {
-        float end = Time.unscaledTime + seconds;
+        float end = Clock() + seconds;
         if (type == BuffType.Production) { prodMult = multiplier; prodBuffEnd = end; }
         else                             { clickMult = multiplier; clickBuffEnd = end; }
     }

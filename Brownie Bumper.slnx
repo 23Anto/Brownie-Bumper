@@ -125,6 +125,7 @@
   <Project Path="Unity.Services.Core.csproj" />
   <Project Path="Unity.Collections.Tests.CoreCLR.InternalJobNestedPrivate.csproj" />
   <Project Path="Unity.CollabProxy.Editor.csproj" />
+  <Project Path="BrownieBumper.Tests.PlayMode.csproj" />
   <Project Path="Unity.2D.Common.Runtime.csproj" />
   <Project Path="Unity.Services.Core.Registration.csproj" />
   <Project Path="Unity.PathTracing.Editor.csproj" />
@@ -178,5 +179,6 @@
   <Project Path="Unity.Collections.Tests.CoreCLR.PrivateJobNested.csproj" />
   <Project Path="Unity.InferenceEngine.iOSBLAS.csproj" />
   <Project Path="Unity.Collections.Tests.CoreCLR.ProtectedJobNested.csproj" />
+  <Project Path="BrownieBumper.Core.csproj" />
   <Project Path="Unity.RenderPipelines.Universal.Config.Runtime.csproj" />
 </Solution>
